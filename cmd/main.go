@@ -2,8 +2,9 @@ package main
 
 import (
 	"burmachine/configService/config"
+	"burmachine/configService/handlers"
+	"burmachine/configService/postgres"
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -21,6 +22,19 @@ func main() {
 	if err != nil {
 		log.Fatalln("Config loading error")
 	}
+
+	con := postgres.NewConnStruct(conf.DbUrl)
+	var data handlers.Data
+	data.Con = con
+
+	err = data.Con.InitDbTables()
+	if err != nil {
+		log.Println(err)
+	}
+
 	mux := http.NewServeMux()
-	fmt.Println(mux)
+	mux = data.ComposeHandlers(mux)
+	logMux := handlers.MiddlewareLog(mux)
+
+	http.ListenAndServe(conf.Addr, logMux)
 }

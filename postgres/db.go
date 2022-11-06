@@ -30,6 +30,7 @@ func Connect(url string) (*pgx.Conn, error) {
 func (c *ConnectData) InitDbTables() error {
 	_, err := c.conn.Exec(context.Background(), `CREATE TABLE configs (
     id serial PRIMARY KEY,
+    serviceName VARCHAR(40),
     conf JSONB  NOT NULL
 	);
 `)

@@ -3,6 +3,7 @@ module burmachine/configService
 go 1.18
 
 require (
+	github.com/gorilla/mux v1.8.0
 	github.com/jackc/pgx/v5 v5.0.4
 	gopkg.in/yaml.v2 v2.4.0
 )

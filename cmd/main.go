@@ -5,6 +5,7 @@ import (
 	"burmachine/configService/handlers"
 	"burmachine/configService/postgres"
 	"flag"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
@@ -32,7 +33,7 @@ func main() {
 		log.Println(err)
 	}
 
-	mux := http.NewServeMux()
+	mux := mux.NewRouter()
 	mux = data.ComposeHandlers(mux)
 	logMux := handlers.MiddlewareLog(mux)
 

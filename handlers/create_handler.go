@@ -28,5 +28,10 @@ func (d *HandlerData) CreateConfigHander(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	err = mongoDb.CreatingInsert(service, res, d.MongoCollection)
+	if err != nil {
+		fmt.Printf("[MONGO ERROR] - %v", err)
+		return
+	}
+	w.Write([]byte("Inserted!"))
 	fmt.Printf("[CREATED] ...\n")
 }
